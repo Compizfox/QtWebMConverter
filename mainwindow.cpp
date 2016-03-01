@@ -23,9 +23,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(ui->audioCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updateCommand()));
 	connect(ui->audioCodecSelect, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCommand()));
 	connect(ui->bitrateEdit, SIGNAL(textChanged(QString)), this, SLOT(updateCommand()));
-	connect(ui->CRFSpinBox, SIGNAL(valueChanged(int)), this, SLOT(updateCommand()));
-	connect(ui->speedComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCommand()));
-	connect(ui->threadsSpinBox, SIGNAL(valueChanged(int)), this, SLOT(updateCommand()));
+	connect(ui->CRFSlider, SIGNAL(valueChanged(int)), this, SLOT(updateCommand()));
+	connect(ui->speedSlider, SIGNAL(valueChanged(int)), this, SLOT(updateCommand()));
 	connect(ui->tilecolumnsSpinBox, SIGNAL(valueChanged(int)), this, SLOT(updateCommand()));
 	connect(ui->frameparallelCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updateCommand()));
 	connect(ui->ColourspaceComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCommand()));
@@ -110,10 +109,10 @@ void MainWindow::updateCommand() {
 		if(ui->frameparallelCheckBox->isChecked()) this->arguments << "-frame-parallel" << "1";
 	}
 
-	this->arguments << "-crf" << ui->CRFSpinBox->text();
+	this->arguments << "-crf" << QString::number(ui->CRFSlider->value());
 	this->arguments << "-b:v" << ui->bitrateEdit->text();
-	this->arguments << "-speed" << ui->speedComboBox->currentText();
-	this->arguments << "-threads" << ui->threadsSpinBox->text();
+	this->arguments << "-speed" << QString::number(ui->speedSlider->value());
+	this->arguments << "-threads" << QString::number(QThread::idealThreadCount());
 	this->arguments << "-pix_fmt" << ui->ColourspaceComboBox->currentText();
 
 	if(ui->audioCheckBox->isChecked()) {

@@ -6,6 +6,7 @@
 #include <QProcess>
 #include <QString>
 #include <QStringList>
+#include <QThread>
 
 namespace Ui {
 	class MainWindow;
