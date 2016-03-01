@@ -20,14 +20,22 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(this->transcodingProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(readyReadStandardOutput()));
 	connect(this->transcodingProcess, SIGNAL(finished(int)), this, SLOT(processFinished()));
 
+	connect(ui->audioBitrateEdit, SIGNAL(textChanged(QString)), this, SLOT(updateCommand()));
 	connect(ui->audioCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updateCommand()));
 	connect(ui->audioCodecSelect, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCommand()));
-	connect(ui->bitrateEdit, SIGNAL(textChanged(QString)), this, SLOT(updateCommand()));
+	connect(ui->videoBitrateEdit, SIGNAL(textChanged(QString)), this, SLOT(updateCommand()));
 	connect(ui->CRFSlider, SIGNAL(valueChanged(int)), this, SLOT(updateCommand()));
 	connect(ui->speedSlider, SIGNAL(valueChanged(int)), this, SLOT(updateCommand()));
 	connect(ui->tilecolumnsSpinBox, SIGNAL(valueChanged(int)), this, SLOT(updateCommand()));
 	connect(ui->frameparallelCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updateCommand()));
 	connect(ui->ColourspaceComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCommand()));
+	connect(ui->trimFromCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updateCommand()));
+	connect(ui->TrimToRadioButton, SIGNAL(clicked(bool)), this, SLOT(updateCommand()));
+	connect(ui->trimFromTimeEdit, SIGNAL(timeChanged(QTime)), this, SLOT(updateCommand()));
+	connect(ui->trimToTimeEdit, SIGNAL(timeChanged(QTime)), this, SLOT(updateCommand()));
+	connect(ui->trimSizeLimitEdit, SIGNAL(textChanged(QString)), this, SLOT(updateCommand()));
+	connect(ui->trimTimeRadioButton, SIGNAL(clicked(bool)), this, SLOT(updateCommand()));
+	connect(ui->trimSizeRadioButton, SIGNAL(clicked(bool)), this, SLOT(updateCommand()));
 }
 
 MainWindow::~MainWindow() {
@@ -101,6 +109,7 @@ void MainWindow::updateCommand() {
 	// Gather ffmpeg arguments
 	this->arguments << "-i" << this->inputFilename;
 
+	// Video codec specific arguments
 	if(ui->videoCodecSelect->currentText() == "VP8") {
 		this->arguments << "-c:v" << "libvpx";
 	} else if(ui->videoCodecSelect->currentText() == "VP9") {
@@ -109,23 +118,31 @@ void MainWindow::updateCommand() {
 		if(ui->frameparallelCheckBox->isChecked()) this->arguments << "-frame-parallel" << "1";
 	}
 
+	// Video
 	this->arguments << "-crf" << QString::number(ui->CRFSlider->value());
-	this->arguments << "-b:v" << ui->bitrateEdit->text();
+	this->arguments << "-b:v" << ui->videoBitrateEdit->text();
 	this->arguments << "-speed" << QString::number(ui->speedSlider->value());
 	this->arguments << "-threads" << QString::number(QThread::idealThreadCount());
 	this->arguments << "-pix_fmt" << ui->ColourspaceComboBox->currentText();
 
+	// Trim
+	if(ui->trimFromCheckBox->isChecked()) this->arguments << "-ss" << ui->trimFromTimeEdit->text();
+	if(ui->trimSizeRadioButton->isChecked()) this->arguments << "-fs" << ui->trimSizeLimitEdit->text();
+	if(ui->trimTimeRadioButton->isChecked()) this->arguments << "-to" << ui->trimToTimeEdit->text();
+
+	// Audio
 	if(ui->audioCheckBox->isChecked()) {
 		if(ui->audioCodecSelect->currentText() == "Vorbis") {
 			this->arguments << "-c:a" << "libvorbis";
 		} else if(ui->audioCodecSelect->currentText() == "Opus") {
 			this->arguments << "-c:a" << "libopus";
 		}
+
+		if(ui->audioBitrateEdit->text() != "") this->arguments << "-b:a" << ui->audioBitrateEdit->text();
 	}
 
-	if(this->outputFilename == "") {
-		this->outputFilename = "output.webm";
-	}
+	// Output
+	if(this->outputFilename == "") this->outputFilename = "output.webm";
 	this->arguments << this->outputFilename;
 
 	// Update preview of command
