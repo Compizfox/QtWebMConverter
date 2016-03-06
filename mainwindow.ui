@@ -379,7 +379,7 @@
               </size>
              </property>
              <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Make sure to set the maximum bitrate high enough for VP8, otherwise the encoder will constantly be capped by it and CRF is pointless.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;For VP9 it's best to set this to 0.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Make sure to set the maximum bitrate high enough for VP8, otherwise the encoder will constantly be capped by it and CRF is pointless.&lt;/p&gt;&lt;p&gt;For VP9 it's best to set this to 0.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="text">
               <string>20M</string>
@@ -396,15 +396,15 @@
           </property>
           <layout class="QFormLayout" name="formLayout_6">
            <item row="0" column="1">
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <item>
+            <layout class="QGridLayout" name="gridLayout_2">
+             <item row="0" column="0">
               <widget class="QLabel" name="label_10">
                <property name="text">
-                <string>Width</string>
+                <string>Width/Height:   </string>
                </property>
               </widget>
              </item>
-             <item>
+             <item row="0" column="1">
               <widget class="QSpinBox" name="scaleWidthSpinBox">
                <property name="enabled">
                 <bool>false</bool>
@@ -415,16 +415,12 @@
                <property name="minimum">
                 <number>-1</number>
                </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_12">
-               <property name="text">
-                <string>Height</string>
+               <property name="maximum">
+                <number>9999</number>
                </property>
               </widget>
              </item>
-             <item>
+             <item row="0" column="2">
               <widget class="QSpinBox" name="scaleHeightSpinBox">
                <property name="enabled">
                 <bool>false</bool>
@@ -434,6 +430,9 @@
                </property>
                <property name="minimum">
                 <number>-1</number>
+               </property>
+               <property name="maximum">
+                <number>9999</number>
                </property>
               </widget>
              </item>
@@ -460,12 +459,18 @@
                <property name="enabled">
                 <bool>false</bool>
                </property>
+               <property name="maximum">
+                <number>9999</number>
+               </property>
               </widget>
              </item>
              <item row="0" column="2">
               <widget class="QSpinBox" name="cropCornerYSpinBox">
                <property name="enabled">
                 <bool>false</bool>
+               </property>
+               <property name="maximum">
+                <number>9999</number>
                </property>
               </widget>
              </item>
@@ -481,12 +486,18 @@
                <property name="enabled">
                 <bool>false</bool>
                </property>
+               <property name="maximum">
+                <number>9999</number>
+               </property>
               </widget>
              </item>
              <item row="1" column="2">
               <widget class="QSpinBox" name="cropdYSpinBox">
                <property name="enabled">
                 <bool>false</bool>
+               </property>
+               <property name="maximum">
+                <number>9999</number>
                </property>
               </widget>
              </item>
@@ -679,9 +690,11 @@
      </widget>
     </item>
     <item>
-     <widget class="QTextBrowser" name="outputBox">
+     <widget class="QPlainTextEdit" name="outputBox">
       <property name="font">
-       <font/>
+       <font>
+        <family>Courier</family>
+       </font>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -694,12 +707,6 @@
       </property>
       <property name="horizontalScrollBarPolicy">
        <enum>Qt::ScrollBarAsNeeded</enum>
-      </property>
-      <property name="lineWrapMode">
-       <enum>QTextEdit::NoWrap</enum>
-      </property>
-      <property name="acceptRichText">
-       <bool>false</bool>
       </property>
      </widget>
     </item>

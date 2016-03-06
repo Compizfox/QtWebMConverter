@@ -100,15 +100,21 @@ void MainWindow::on_cancelButton_clicked() {
 void MainWindow::processStarted() {
 	ui->convertButton->setEnabled(0);
 	ui->cancelButton->setEnabled(1);
+
+	QApplication::setOverrideCursor(Qt::WaitCursor);
 }
 
 void MainWindow::processFinished() {
 	ui->convertButton->setEnabled(1);
 	ui->cancelButton->setEnabled(0);
+
+	QApplication::restoreOverrideCursor();
 }
 
 void MainWindow::readyReadStandardOutput() {
-	ui->outputBox->append(this->transcodingProcess->readAllStandardOutput());
+	ui->outputBox->moveCursor(QTextCursor::End);
+	ui->outputBox->insertPlainText(this->transcodingProcess->readAllStandardOutput());
+	ui->outputBox->moveCursor(QTextCursor::End);
 }
 
 void MainWindow::updateCommand() {
