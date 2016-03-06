@@ -36,6 +36,14 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(ui->trimSizeLimitEdit, SIGNAL(textChanged(QString)), this, SLOT(updateCommand()));
 	connect(ui->trimTimeRadioButton, SIGNAL(clicked(bool)), this, SLOT(updateCommand()));
 	connect(ui->trimSizeRadioButton, SIGNAL(clicked(bool)), this, SLOT(updateCommand()));
+	connect(ui->scaleCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updateCommand()));
+	connect(ui->scaleHeightSpinBox, SIGNAL(valueChanged(int)), this, SLOT(updateCommand()));
+	connect(ui->scaleWidthSpinBox, SIGNAL(valueChanged(int)), this, SLOT(updateCommand()));
+	connect(ui->cropCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updateCommand()));
+	connect(ui->cropCornerXSpinBox, SIGNAL(valueChanged(int)), this, SLOT(updateCommand()));
+	connect(ui->cropCornerYSpinBox, SIGNAL(valueChanged(int)), this, SLOT(updateCommand()));
+	connect(ui->cropdXSpinBox, SIGNAL(valueChanged(int)), this, SLOT(updateCommand()));
+	connect(ui->cropdYSpinBox, SIGNAL(valueChanged(int)), this, SLOT(updateCommand()));
 }
 
 MainWindow::~MainWindow() {
@@ -124,6 +132,16 @@ void MainWindow::updateCommand() {
 	this->arguments << "-speed" << QString::number(ui->speedSlider->value());
 	this->arguments << "-threads" << QString::number(QThread::idealThreadCount());
 	this->arguments << "-pix_fmt" << ui->ColourspaceComboBox->currentText();
+
+	// Rescale
+	if(ui->scaleCheckBox->isChecked()) this->arguments << "-s" << QString::number(ui->scaleWidthSpinBox->value()) + ":" + QString::number(ui->scaleHeightSpinBox->value());
+
+	// Crop
+	if(ui->cropCheckBox->isChecked()) this->arguments << "-filter:v" << QString("\"crop=%1:%2:%3:%4\"").arg(
+															 QString::number(ui->cropdXSpinBox->value()),
+															 QString::number(ui->cropdYSpinBox->value()),
+															 QString::number(ui->cropCornerXSpinBox->value()),
+															 QString::number(ui->cropCornerYSpinBox->value()));
 
 	// Trim
 	if(ui->trimFromCheckBox->isChecked()) this->arguments << "-ss" << ui->trimFromTimeEdit->text();
