@@ -7,6 +7,7 @@
 #include <QString>
 #include <QStringList>
 #include <QThread>
+#include <QMessageBox>
 
 namespace Ui {
 	class MainWindow;
@@ -36,6 +37,8 @@ class MainWindow : public QMainWindow {
 		void on_outputLineEdit_textChanged(const QString &arg1);
 
 		void on_cancelButton_clicked();
+
+        void on_actionAbout_triggered();
 
 	private:
 		Ui::MainWindow *ui;
