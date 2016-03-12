@@ -16,6 +16,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 	this->on_videoCodecSelect_currentTextChanged(ui->videoCodecSelect->currentText());
 
+	QButtonGroup* group = new QButtonGroup(parent);
+	group->addButton(ui->framerateRadioButton_1);
+	group->addButton(ui->framerateRadioButton_2);
+
 	connect(this->transcodingProcess, SIGNAL(started()), this, SLOT(processStarted()));
 	connect(this->transcodingProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(readyReadStandardOutput()));
 	connect(this->transcodingProcess, SIGNAL(finished(int)), this, SLOT(processFinished()));
@@ -44,6 +48,9 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(ui->cropCornerYSpinBox, SIGNAL(valueChanged(int)), this, SLOT(updateCommand()));
 	connect(ui->cropdXSpinBox, SIGNAL(valueChanged(int)), this, SLOT(updateCommand()));
 	connect(ui->cropdYSpinBox, SIGNAL(valueChanged(int)), this, SLOT(updateCommand()));
+	connect(ui->framerateRadioButton_1, SIGNAL(clicked(bool)), this, SLOT(updateCommand()));
+	connect(ui->framerateRadioButton_2, SIGNAL(clicked(bool)), this, SLOT(updateCommand()));
+	connect(ui->framerateSpinBox, SIGNAL(valueChanged(int)), this, SLOT(updateCommand()));
 }
 
 MainWindow::~MainWindow() {
@@ -142,6 +149,9 @@ void MainWindow::updateCommand() {
 	this->arguments << "-speed" << QString::number(ui->speedSlider->value());
 	this->arguments << "-threads" << QString::number(QThread::idealThreadCount());
 	this->arguments << "-pix_fmt" << ui->ColourspaceComboBox->currentText();
+
+	// Framerate
+	if(ui->framerateRadioButton_2->isChecked()) this->arguments << "-r" << QString::number(ui->framerateSpinBox->value());
 
 	// Rescale
 	if(ui->scaleCheckBox->isChecked()) this->arguments << "-s" << QString::number(ui->scaleWidthSpinBox->value()) + ":" + QString::number(ui->scaleHeightSpinBox->value());
