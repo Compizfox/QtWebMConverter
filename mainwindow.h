@@ -28,7 +28,6 @@ class MainWindow : public QMainWindow {
 		void on_videoCodecSelect_currentTextChanged(const QString &arg1);
 		void on_inputLineEdit_textChanged(const QString &arg1);
 		void on_outputLineEdit_textChanged(const QString &arg1);
-		void on_outputLineEdit_textChanged(const QString &arg1);
 		void on_actionAbout_triggered();
 		void on_actionExit_triggered();
 
