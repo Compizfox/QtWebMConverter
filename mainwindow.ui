@@ -382,7 +382,7 @@
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Make sure to set the maximum bitrate high enough for VP8, otherwise the encoder will constantly be capped by it and CRF is pointless.&lt;/p&gt;&lt;p&gt;For VP9 it's best to set this to 0.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="text">
-              <string>20M</string>
+              <string>0</string>
              </property>
             </widget>
            </item>
@@ -436,6 +436,13 @@
            <string>Picture</string>
           </property>
           <layout class="QFormLayout" name="formLayout_6">
+           <item row="0" column="0">
+            <widget class="QCheckBox" name="scaleCheckBox">
+             <property name="text">
+              <string>Rescale</string>
+             </property>
+            </widget>
+           </item>
            <item row="0" column="1">
             <layout class="QGridLayout" name="gridLayout_2">
              <item row="0" column="0">
@@ -488,24 +495,14 @@
            </item>
            <item row="1" column="1">
             <layout class="QGridLayout" name="gridLayout">
-             <item row="0" column="0">
+             <item row="0" column="2">
               <widget class="QLabel" name="label_13">
                <property name="text">
-                <string>Top-left corner:</string>
+                <string>Top</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="1">
-              <widget class="QSpinBox" name="cropCornerXSpinBox">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="maximum">
-                <number>9999</number>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="2">
+             <item row="1" column="2">
               <widget class="QSpinBox" name="cropCornerYSpinBox">
                <property name="enabled">
                 <bool>false</bool>
@@ -515,14 +512,24 @@
                </property>
               </widget>
              </item>
-             <item row="1" column="0">
+             <item row="2" column="0">
               <widget class="QLabel" name="label_14">
                <property name="text">
-                <string>Width/Height:</string>
+                <string>Left</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
+             <item row="2" column="1">
+              <widget class="QSpinBox" name="cropCornerXSpinBox">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="maximum">
+                <number>9999</number>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="3">
               <widget class="QSpinBox" name="cropdXSpinBox">
                <property name="enabled">
                 <bool>false</bool>
@@ -532,7 +539,14 @@
                </property>
               </widget>
              </item>
-             <item row="1" column="2">
+             <item row="2" column="4">
+              <widget class="QLabel" name="label_16">
+               <property name="text">
+                <string>Width</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
               <widget class="QSpinBox" name="cropdYSpinBox">
                <property name="enabled">
                 <bool>false</bool>
@@ -542,14 +556,14 @@
                </property>
               </widget>
              </item>
+             <item row="4" column="2">
+              <widget class="QLabel" name="label_15">
+               <property name="text">
+                <string>Height</string>
+               </property>
+              </widget>
+             </item>
             </layout>
-           </item>
-           <item row="0" column="0">
-            <widget class="QCheckBox" name="scaleCheckBox">
-             <property name="text">
-              <string>Rescale</string>
-             </property>
-            </widget>
            </item>
           </layout>
          </widget>
@@ -769,14 +783,6 @@
     <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuHelp"/>
-  </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionAbout">
