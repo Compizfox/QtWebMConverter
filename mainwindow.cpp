@@ -108,6 +108,10 @@ void MainWindow::on_actionAbout_triggered() {
     QMessageBox::about(this, "About QtWebMConverter", QString("<h3>QtWebMConverter 0.1</h3> <p>QtWebMConverter is a front-end for ffmpeg.</p> <p>Based on Qt %1.</p> <p><a href=\"https://github.com/Compizfox/QtWebMConverter\">Github page</a></p>").arg(QT_VERSION_STR));
 }
 
+void MainWindow::on_actionExit_triggered() {
+	QApplication::quit();
+}
+
 void MainWindow::processStarted() {
 	ui->convertButton->setEnabled(0);
 	ui->cancelButton->setEnabled(1);

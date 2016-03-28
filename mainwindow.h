@@ -24,21 +24,19 @@ class MainWindow : public QMainWindow {
 		void on_inputBrowseButton_clicked();
 		void on_OutputBrowseButton_clicked();
 		void on_convertButton_clicked();
+		void on_cancelButton_clicked();
 		void on_videoCodecSelect_currentTextChanged(const QString &arg1);
+		void on_inputLineEdit_textChanged(const QString &arg1);
+		void on_outputLineEdit_textChanged(const QString &arg1);
+		void on_outputLineEdit_textChanged(const QString &arg1);
+		void on_actionAbout_triggered();
+		void on_actionExit_triggered();
 
 		void processStarted();
 		void processFinished();
 		void readyReadStandardOutput();
 
 		void updateCommand();
-
-		void on_inputLineEdit_textChanged(const QString &arg1);
-
-		void on_outputLineEdit_textChanged(const QString &arg1);
-
-		void on_cancelButton_clicked();
-
-        void on_actionAbout_triggered();
 
 	private:
 		Ui::MainWindow *ui;
