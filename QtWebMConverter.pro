@@ -22,3 +22,7 @@ FORMS    += mainwindow.ui
 DISTFILES += \
     README.md \
     TODO.md
+    
+target.path = /usr/bin/
+
+INSTALLS += target
