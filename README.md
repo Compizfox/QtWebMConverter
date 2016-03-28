@@ -32,3 +32,13 @@ To build QtWebMConverter, do
 
     # qmake
     # make install
+
+## Screenshots
+
+Windows 8.1
+
+![](https://host.tuxplace.nl/screenshots/2016-03-28-23-25-38.png)
+
+Linux (KDE, Breeze theme)
+
+![](https://host.tuxplace.nl/screenshots/Screenshot_20160328_232817.png)
